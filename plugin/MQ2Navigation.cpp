@@ -1078,7 +1078,7 @@ void MQ2NavigationPlugin::AttemptClick()
 		return;
 	m_lastClick = now;
 
-	if (m_pEndingSwitch && GetDistance(m_pEndingSwitch->X, m_pEndingSwitch->Y) < 25)
+	if (m_pEndingSwitch && GetDistanceFromPlayer(m_pEndingSwitch->X, m_pEndingSwitch->Y) < 25)
 	{
 		ClickDoor(m_pEndingSwitch);
 	}
@@ -1106,7 +1106,7 @@ void MQ2NavigationPlugin::StuckCheck()
 		{
 			if (GetCharInfo()->pSpawn->SpeedMultiplier != -10000
 				&& FindSpeed(GetCharInfo()->pSpawn)
-				&& (GetDistance(m_stuckX, m_stuckY) < FindSpeed(GetCharInfo()->pSpawn) / 600)
+				&& (GetDistanceFromPlayer(m_stuckX, m_stuckY) < FindSpeed(GetCharInfo()->pSpawn) / 600)
 				&& !GetCharInfo()->pSpawn->mPlayerPhysicsClient.Levitate
 				&& !GetCharInfo()->pSpawn->UnderWater
 				&& !GetCharInfo()->Stunned
@@ -1243,7 +1243,7 @@ void MQ2NavigationPlugin::AttemptMovement()
 
 		glm::vec3 nextPosition = m_activePath->GetNextPosition();
 
-		float distanceFromNextPosition = GetDistance(nextPosition.x, nextPosition.z);
+		float distanceFromNextPosition = GetDistanceFromPlayer(nextPosition.x, nextPosition.z);
 
 		if (distanceFromNextPosition < WAYPOINT_PROGRESSION_DISTANCE)
 		{
@@ -1334,7 +1334,7 @@ EQSwitch* ParseDoorTarget(char* buffer, const char* szLine, int& argIndex)
 				&& (pSwitch->Z >= pSpawn->Z - gZFilter))))
 		{
 			id = theSwitch->ID;
-			float d = Get3DDistance(pSpawn->X, pSpawn->Y, pSpawn->Z,
+			float d = GetDistance(pSpawn->X, pSpawn->Y, pSpawn->Z,
 				theSwitch->X, theSwitch->Y, theSwitch->Z);
 			if (d < distance)
 			{
